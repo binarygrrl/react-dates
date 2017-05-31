@@ -25,7 +25,7 @@ export default class CloseOnEsc extends Component {
     return Children.only(this.props.children);
   }
 }
-
+/*
 CloseOnEsc.propTypes = {
   onEscape: PropTypes.func.isRequired
-};
+};*/

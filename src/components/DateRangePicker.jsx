@@ -109,9 +109,10 @@ export default class DateRangePicker extends React.Component {
 
     this.isTouchDevice = false;
 
-    this.onKeyDownEsc = this.onKeyDownEsc.bind(this);
+    //this.onKeyDownEsc = this.onKeyDownEsc.bind(this);
 
     this.onOutsideClick = this.onOutsideClick.bind(this);
+    this.onEscape = this.onEscape.bind(this);
     this.onDateRangePickerInputFocus = this.onDateRangePickerInputFocus.bind(this);
     this.onDayPickerFocus = this.onDayPickerFocus.bind(this);
     this.onDayPickerBlur = this.onDayPickerBlur.bind(this);
@@ -168,7 +169,8 @@ export default class DateRangePicker extends React.Component {
   }
 
 
-  onKeyDownEsc() {
+  onEscape() {
+    console.log('On Escape!');
     const { onFocusChange, onClose, startDate, endDate } = this.props;
     if (!this.isOpened()) return;
 
@@ -334,7 +336,9 @@ export default class DateRangePicker extends React.Component {
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
-    //const CloseOnEscape;// => <CloseOnEsc onEscape={onEscape}><span>Test Close On Escape</span></CloseOnEsc>;
+    const onEscape = (!withFullScreenPortal && withPortal)
+      ? this.onEscape
+      : undefined;
 
     const onOutsideClick = (!withFullScreenPortal && withPortal)
       ? this.onOutsideClick
@@ -350,8 +354,8 @@ export default class DateRangePicker extends React.Component {
         className={this.getDayPickerContainerClasses()}
         style={dayPickerContainerStyles}
         onClick={onOutsideClick}
+        CloseOnEscape={onEscape}
       >
-      <CloseOnEscape>
         <DayPickerRangeController
           ref={(ref) => { this.dayPicker = ref; }}
           orientation={orientation}
@@ -386,7 +390,6 @@ export default class DateRangePicker extends React.Component {
           phrases={phrases}
           isRTL={isRTL}
         />
-      </CloseOnEscape>
         {withFullScreenPortal && (
           <button
             className="DateRangePicker__close"
@@ -436,46 +439,49 @@ export default class DateRangePicker extends React.Component {
     const { isDateRangePickerInputFocused } = this.state;
 
     const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onOutsideClick : undefined;
+    const onEscape = (!withPortal && !withFullScreenPortal) ? this.onEscape : undefined;
 
     return (
       <div className="DateRangePicker">
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
-          <DateRangePickerInputController
-            startDate={startDate}
-            startDateId={startDateId}
-            startDatePlaceholderText={startDatePlaceholderText}
-            isStartDateFocused={focusedInput === START_DATE}
-            endDate={endDate}
-            endDateId={endDateId}
-            endDatePlaceholderText={endDatePlaceholderText}
-            isEndDateFocused={focusedInput === END_DATE}
-            displayFormat={displayFormat}
-            showClearDates={showClearDates}
-            showCaret={!withPortal && !withFullScreenPortal}
-            showDefaultInputIcon={showDefaultInputIcon}
-            customInputIcon={customInputIcon}
-            customArrowIcon={customArrowIcon}
-            customCloseIcon={customCloseIcon}
-            disabled={disabled}
-            required={required}
-            readOnly={readOnly}
-            reopenPickerOnClearDates={reopenPickerOnClearDates}
-            keepOpenOnDateSelect={keepOpenOnDateSelect}
-            isOutsideRange={isOutsideRange}
-            withFullScreenPortal={withFullScreenPortal}
-            onDatesChange={onDatesChange}
-            onFocusChange={this.onDateRangePickerInputFocus}
-            onArrowDown={this.onDayPickerFocus}
-            onQuestionMark={this.showKeyboardShortcutsPanel}
-            onClose={onClose}
-            phrases={phrases}
-            screenReaderMessage={screenReaderInputMessage}
-            isFocused={isDateRangePickerInputFocused}
-            isRTL={isRTL}
-          />
+          <CloseOnEscape onEscape={onEscape}>
+            <DateRangePickerInputController
+              startDate={startDate}
+              startDateId={startDateId}
+              startDatePlaceholderText={startDatePlaceholderText}
+              isStartDateFocused={focusedInput === START_DATE}
+              endDate={endDate}
+              endDateId={endDateId}
+              endDatePlaceholderText={endDatePlaceholderText}
+              isEndDateFocused={focusedInput === END_DATE}
+              displayFormat={displayFormat}
+              showClearDates={showClearDates}
+              showCaret={!withPortal && !withFullScreenPortal}
+              showDefaultInputIcon={showDefaultInputIcon}
+              customInputIcon={customInputIcon}
+              customArrowIcon={customArrowIcon}
+              customCloseIcon={customCloseIcon}
+              disabled={disabled}
+              required={required}
+              readOnly={readOnly}
+              reopenPickerOnClearDates={reopenPickerOnClearDates}
+              keepOpenOnDateSelect={keepOpenOnDateSelect}
+              isOutsideRange={isOutsideRange}
+              withFullScreenPortal={withFullScreenPortal}
+              onDatesChange={onDatesChange}
+              onFocusChange={this.onDateRangePickerInputFocus}
+              onArrowDown={this.onDayPickerFocus}
+              onQuestionMark={this.showKeyboardShortcutsPanel}
+              onClose={onClose}
+              phrases={phrases}
+              screenReaderMessage={screenReaderInputMessage}
+              isFocused={isDateRangePickerInputFocused}
+              isRTL={isRTL}
+            />
+          </CloseOnEscape>
+        </OutsideClickHandler>
 
           {this.maybeRenderDayPickerWithPortal()}
-        </OutsideClickHandler>
       </div>
     );
   }
