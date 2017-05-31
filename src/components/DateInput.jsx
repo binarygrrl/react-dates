@@ -23,6 +23,9 @@ const propTypes = forbidExtraProps({
   onKeyDownShiftTab: PropTypes.func,
   onKeyDownTab: PropTypes.func,
 
+  //Added by Amber - 1st addition
+  onKeyDownEsc: PropTypes.func,
+
   onKeyDownArrowDown: PropTypes.func,
   onKeyDownQuestionMark: PropTypes.func,
 
@@ -45,6 +48,9 @@ const defaultProps = {
   onFocus() {},
   onKeyDownShiftTab() {},
   onKeyDownTab() {},
+
+  //Added by Amber - 2nd Step
+  onKeyDownEsc() {},
 
   onKeyDownArrowDown() {},
   onKeyDownQuestionMark() {},
@@ -110,6 +116,7 @@ export default class DateInput extends React.Component {
     const {
       onKeyDownShiftTab,
       onKeyDownTab,
+      onKeyDownEsc,
       onKeyDownArrowDown,
       onKeyDownQuestionMark,
     } = this.props;
@@ -126,7 +133,11 @@ export default class DateInput extends React.Component {
     } else if (key === '?') {
       e.preventDefault();
       onKeyDownQuestionMark(e);
+    } else if (key === 'Esc'){
+      e.preventDefault();
+      onKeyDownEsc(e);
     }
+
   }
 
   render() {

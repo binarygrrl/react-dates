@@ -162,6 +162,21 @@ export default class DateRangePicker extends React.Component {
     onClose({ startDate, endDate });
   }
 
+
+  onKeyDownEsc() {
+    const { onFocusChange, onClose, startDate, endDate } = this.props;
+    if (!this.isOpened()) return;
+
+    this.setState({
+      isDateRangePickerInputFocused: false,
+      isDayPickerFocused: false,
+      showKeyboardShortcuts: false,
+    });
+
+    onFocusChange(null);
+    onClose({ startDate, endDate });
+  }
+
   onDateRangePickerInputFocus(focusedInput) {
     const { onFocusChange, withPortal, withFullScreenPortal } = this.props;
 

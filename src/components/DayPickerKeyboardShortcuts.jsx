@@ -96,6 +96,7 @@ export default function DayPickerKeyboardShortcuts({
     unicode: 'Esc',
     label: phrases.escape,
     action: phrases.returnFocusToInput,
+    //Need to add close date modal function here
   },
   {
     unicode: '?',
@@ -157,6 +158,10 @@ export default function DayPickerKeyboardShortcuts({
               // close button or hitting escape
               if (e.key === 'Tab') {
                 e.preventDefault();
+              }
+              else if(e.key === 'Esc'){
+                e.preventDefault();
+                closeKeyboardShortcutsPanel();
               }
             }}
           >
