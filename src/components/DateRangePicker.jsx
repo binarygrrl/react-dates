@@ -22,6 +22,9 @@ import CloseButton from '../svg/close.svg';
 
 import DateRangePickerShape from '../shapes/DateRangePickerShape';
 
+import CloseOnEsc from './CloseOnEsc';
+import CloseOnEscape from 'react-close-on-escape';
+
 import {
   START_DATE,
   END_DATE,
@@ -105,6 +108,8 @@ export default class DateRangePicker extends React.Component {
     };
 
     this.isTouchDevice = false;
+
+    this.onKeyDownEsc = this.onKeyDownEsc.bind(this);
 
     this.onOutsideClick = this.onOutsideClick.bind(this);
     this.onDateRangePickerInputFocus = this.onDateRangePickerInputFocus.bind(this);
@@ -329,6 +334,8 @@ export default class DateRangePicker extends React.Component {
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
+    //const CloseOnEscape;// => <CloseOnEsc onEscape={onEscape}><span>Test Close On Escape</span></CloseOnEsc>;
+
     const onOutsideClick = (!withFullScreenPortal && withPortal)
       ? this.onOutsideClick
       : undefined;
@@ -344,6 +351,7 @@ export default class DateRangePicker extends React.Component {
         style={dayPickerContainerStyles}
         onClick={onOutsideClick}
       >
+      <CloseOnEscape>
         <DayPickerRangeController
           ref={(ref) => { this.dayPicker = ref; }}
           orientation={orientation}
@@ -378,7 +386,7 @@ export default class DateRangePicker extends React.Component {
           phrases={phrases}
           isRTL={isRTL}
         />
-
+      </CloseOnEscape>
         {withFullScreenPortal && (
           <button
             className="DateRangePicker__close"
