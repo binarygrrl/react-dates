@@ -23,7 +23,7 @@ import CloseButton from '../svg/close.svg';
 import DateRangePickerShape from '../shapes/DateRangePickerShape';
 
 import CloseOnEsc from './CloseOnEsc';
-import CloseOnEscape from 'react-close-on-escape';
+//import CloseOnEscape from 'react-close-on-escape';
 
 import {
   START_DATE,
@@ -82,6 +82,7 @@ const defaultProps = {
   onNextMonthClick() {},
 
   onClose() {},
+  onCloseModal(){},
 
   // day presentation and interaction related props
   renderDay: null,
@@ -111,8 +112,8 @@ export default class DateRangePicker extends React.Component {
 
     //this.onKeyDownEsc = this.onKeyDownEsc.bind(this);
 
-    this.onOutsideClick = this.onOutsideClick.bind(this);
-    this.onEscape = this.onEscape.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
+    //this.onEscape = this.onEscape.bind(this);
     this.onDateRangePickerInputFocus = this.onDateRangePickerInputFocus.bind(this);
     this.onDayPickerFocus = this.onDayPickerFocus.bind(this);
     this.onDayPickerBlur = this.onDayPickerBlur.bind(this);
@@ -153,8 +154,8 @@ export default class DateRangePicker extends React.Component {
   componentWillUnmount() {
     if (this.resizeHandle) removeEventListener(this.resizeHandle);
   }
-
-  onOutsideClick() {
+  onCloseModal(){
+  //onOutsideClick() {
     const { onFocusChange, onClose, startDate, endDate } = this.props;
     if (!this.isOpened()) return;
 
@@ -169,7 +170,7 @@ export default class DateRangePicker extends React.Component {
   }
 
 
-  onEscape() {
+ /* onEscape() {
     console.log('On Escape!');
     const { onFocusChange, onClose, startDate, endDate } = this.props;
     if (!this.isOpened()) return;
@@ -182,7 +183,7 @@ export default class DateRangePicker extends React.Component {
 
     onFocusChange(null);
     onClose({ startDate, endDate });
-  }
+  }*/
 
   onDateRangePickerInputFocus(focusedInput) {
     const { onFocusChange, withPortal, withFullScreenPortal } = this.props;
@@ -336,12 +337,8 @@ export default class DateRangePicker extends React.Component {
     } = this.props;
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
-    const onEscape = (!withFullScreenPortal && withPortal)
-      ? this.onEscape
-      : undefined;
-
-    const onOutsideClick = (!withFullScreenPortal && withPortal)
-      ? this.onOutsideClick
+    const onCloseModal = (!withFullScreenPortal && withPortal)
+      ? this.onCloseModal
       : undefined;
     const initialVisibleMonthThunk =
       initialVisibleMonth || (() => (startDate || endDate || moment()));
@@ -353,8 +350,7 @@ export default class DateRangePicker extends React.Component {
         ref={(ref) => { this.dayPickerContainer = ref; }}
         className={this.getDayPickerContainerClasses()}
         style={dayPickerContainerStyles}
-        onClick={onOutsideClick}
-        CloseOnEscape={onEscape}
+        onClick={onCloseModal}
       >
         <DayPickerRangeController
           ref={(ref) => { this.dayPicker = ref; }}
@@ -394,7 +390,7 @@ export default class DateRangePicker extends React.Component {
           <button
             className="DateRangePicker__close"
             type="button"
-            onClick={this.onOutsideClick}
+            onClick={this.onCloseModal}
             aria-label={phrases.closeDatePicker}
           >
             <div className="DateRangePicker__close">
@@ -438,13 +434,13 @@ export default class DateRangePicker extends React.Component {
 
     const { isDateRangePickerInputFocused } = this.state;
 
-    const onOutsideClick = (!withPortal && !withFullScreenPortal) ? this.onOutsideClick : undefined;
-    const onEscape = (!withPortal && !withFullScreenPortal) ? this.onEscape : undefined;
+    const onCloseModal = (!withPortal && !withFullScreenPortal) ? this.onCloseModal : undefined;
+
 
     return (
       <div className="DateRangePicker">
-        <OutsideClickHandler onOutsideClick={onOutsideClick}>
-          <CloseOnEscape onEscape={onEscape}>
+        <OutsideClickHandler onCloseModal={onCloseModal}>
+          <CloseOnEsc onCloseModal={onCloseModal}>
             <DateRangePickerInputController
               startDate={startDate}
               startDateId={startDateId}
@@ -478,7 +474,7 @@ export default class DateRangePicker extends React.Component {
               isFocused={isDateRangePickerInputFocused}
               isRTL={isRTL}
             />
-          </CloseOnEscape>
+          </CloseOnEsc>
         </OutsideClickHandler>
 
           {this.maybeRenderDayPickerWithPortal()}

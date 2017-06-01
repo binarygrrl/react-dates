@@ -159,10 +159,6 @@ export default function DayPickerKeyboardShortcuts({
               if (e.key === 'Tab') {
                 e.preventDefault();
               }
-              else if(e.key === 'Esc'){
-                e.preventDefault();
-                closeKeyboardShortcutsPanel();
-              }
             }}
           >
             <CloseButton />

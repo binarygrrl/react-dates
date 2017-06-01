@@ -49,7 +49,7 @@ const propTypes = forbidExtraProps({
   onDatesChange: PropTypes.func,
   onArrowDown: PropTypes.func,
   onQuestionMark: PropTypes.func,
-  onEsc: PropTypes.func,
+
 
   customInputIcon: PropTypes.node,
   customArrowIcon: PropTypes.node,
@@ -94,7 +94,6 @@ const defaultProps = {
   onDatesChange() {},
   onArrowDown() {},
   onQuestionMark() {},
-  onEsc() {},
 
   customInputIcon: null,
   customArrowIcon: null,
@@ -236,7 +235,7 @@ export default class DateRangePickerInputController extends React.Component {
       phrases,
       onArrowDown,
       onQuestionMark,
-      onEsc,
+    
       isRTL,
     } = this.props;
 
@@ -278,7 +277,7 @@ export default class DateRangePickerInputController extends React.Component {
         screenReaderMessage={screenReaderMessage}
         onArrowDown={onArrowDown}
         onQuestionMark={onQuestionMark}
-        onEsc={onEsc}
+        
         isRTL={isRTL}
       />
     );
@@ -287,6 +286,3 @@ export default class DateRangePickerInputController extends React.Component {
 
 DateRangePickerInputController.propTypes = propTypes;
 DateRangePickerInputController.defaultProps = defaultProps;
-
-
-/*added the onEsc method throughout to enable the keyDown function in child and parent methods*/

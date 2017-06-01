@@ -4,28 +4,27 @@ import PropTypes from 'prop-types';
 export default class CloseOnEsc extends Component {
   constructor() {
     super();
-    this.onEscape = this.onEscape.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
   }
 
   onEscape({ keyCode }) {
     if (keyCode === 27) {
-      this.props.onEscape();
+      this.props.onCloseModal();
     }
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.onEscape);
+    document.addEventListener('keydown', this.onCloseModal);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.onEscape);
+    document.removeEventListener('keydown', this.onCloseModal);
   }
 
   render() {
     return Children.only(this.props.children);
   }
 }
-/*
 CloseOnEsc.propTypes = {
-  onEscape: PropTypes.func.isRequired
-};*/
+  onCloseModal: PropTypes.func.isRequired
+};
